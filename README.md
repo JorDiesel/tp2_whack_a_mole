@@ -1,4 +1,4 @@
-# tp1_whack_a_mole
+# tp2_whack_a_mole
 
 A new Flutter project.
 
