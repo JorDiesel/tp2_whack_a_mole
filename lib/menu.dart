@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tp1_whack_a_mole/vue/Insert.dart';
 import 'package:tp1_whack_a_mole/scoreValidator.dart';
 import 'Leaderboard.dart';
 import 'about.dart';
-import 'background.dart';
-import 'game.dart';
 
 class Menu extends StatelessWidget {
   const Menu({super.key});
@@ -51,7 +50,7 @@ class Menu extends StatelessWidget {
                             )
                         ),
                       ),
-                      onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => Jeu()));},
+                      onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => InsertView()));},
                       child: const Text(
                         'NEW GAME',
                         style: TextStyle(

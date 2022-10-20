@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:tp1_whack_a_mole/sqlite.dart';
+import 'package:tp1_whack_a_mole/vue/update.dart';
+import 'models/player.dart';
 
 class ListeAvecScroll extends StatefulWidget {
   const ListeAvecScroll({super.key});
@@ -8,14 +12,6 @@ class ListeAvecScroll extends StatefulWidget {
 }
 
 class _ListeAvecScroll extends State<ListeAvecScroll> {
-  final ScrollController _firstController = ScrollController();
-
-  /*void highlightBlue(PointerEvent details) {
-    setState(() {
-      x = details.position.dx;
-      y = details.position.dy;
-    });
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -23,45 +19,80 @@ class _ListeAvecScroll extends State<ListeAvecScroll> {
         builder: (BuildContext context, BoxConstraints constraints) {
           return SizedBox(
                   width: constraints.maxWidth / 2,
-                  // This vertical scroll view has primary set to true, so it is
-                  // using the PrimaryScrollController. On mobile platforms, the
-                  // PrimaryScrollController automatically attaches to vertical
-                  // ScrollViews, unlike on Desktop platforms, where the primary
-                  // parameter is required.
                   child: Scrollbar(
                     thumbVisibility: true,
-                    child: ListView.builder(
-                        primary: true,
-                        itemCount: 100,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                              height: 50,
-                              color: index.isEven
-                                  ? Color.fromRGBO(120, 120, 120, 100)
-                                  : Color.fromRGBO(80, 80, 80, 100),
-                              child:
-                                  new GestureDetector(
-                                      onTap: (){
-                                        print("Container clicked");
-                                      },
-                                    child: new Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child:Row(
-                                          children:[
-                                            Padding(padding:EdgeInsets.all(20.0)),
-                                            Text('date ',style:TextStyle(color: Colors.white)),
-                                            Padding(padding:EdgeInsets.all(16.0)),
-                                            Text(' joueur$index',style:TextStyle(color: Colors.white)),
-                                            Spacer(),
-                                            Text('score:  $index',style:TextStyle(color: Colors.white)),
-                                            Padding(padding:EdgeInsets.all(20.0))
-                                  ]
-                                )
+                    child: FutureBuilder<List<Player>>(
+                      future: Sqlite.getPlayers(),
+                      builder: (BuildContext context, AsyncSnapshot<List<Player>> snapshot){
+                        if(snapshot.hasData){
+                          return ListView.builder(
+                              primary: true,
+                              itemCount: snapshot.data?.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                    height: 50,
+                                    color: index.isEven
+                                        ? Color.fromRGBO(120, 120, 120, 100)
+                                        : Color.fromRGBO(80, 80, 80, 100),
+                                    child:
+                                    GestureDetector(
+                                        onTap: (){
+                                          print("Container clicked");
+                                        },
+                                        child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child:Row(
+                                                children:[
+                                                  Spacer(),
+                                                  Text( DateFormat.yMMMd().format(snapshot.data![index].date),style:TextStyle(color: Colors.white)),
+                                                  Spacer(),
+                                                  Text(' ${snapshot.data?[index].name}',style:TextStyle(color: Colors.white)),
+                                                  Spacer(),
+                                                  Text('${snapshot.data?[index].score}',style:TextStyle(color: Colors.white)),
+                                                  Spacer(),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Update(player: snapshot.data?[index])));
+                                                    },
+                                                    child: Icon(
+                                                      Icons.border_color,
+                                                      color: Colors.yellow,
+                                                      size: 15.0,
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Sqlite.deletePlayer(int.parse('${snapshot.data?[index].id}'));                                                 },
+                                                    child: Icon(
+                                                      Icons.delete,
+                                                      color: Colors.red,
+                                                      size: 15.0,
+                                                    ),
+                                                  ),
+                                                  Spacer()
+                                                ]
+                                            )
 
+                                        )
+                                    )
+                                );
+                              });
+                        }
+                        else{
+                          return Center(
+                              child:Text(
+                                  'No score',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold
+                                ),
                               )
-                                  )
                           );
-                        }),
+                        }
+                      },
+                    )
                   ));
         });
   }

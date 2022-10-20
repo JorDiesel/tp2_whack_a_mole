@@ -1,38 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:tp1_whack_a_mole/background.dart';
+import 'package:tp1_whack_a_mole/models/player.dart';
 import 'package:tp1_whack_a_mole/sqlite.dart';
 
-class ScoreValidator extends StatefulWidget {
-  const ScoreValidator({super.key});
+class Update extends StatelessWidget {
+  final Player? player;
+  const Update({super.key, required this.player});
 
-  @override
-  State<ScoreValidator> createState() => _ScoreValidatorState();
-}
-
-
-class _ScoreValidatorState extends State<ScoreValidator> {
-  bool _isExist = false;
-  bool _isPressedOnce = false;
-
-  TextEditingController dateController = new TextEditingController();
-  TextEditingController nameController = new TextEditingController();
-  TextEditingController scoreController = new TextEditingController();
-
-  void changeStateValue(bool isExist) {
-    setState(() { _isExist = isExist; });
-  }
-
-  void buttonpressed() {
-    setState(() { _isPressedOnce = true; });
-  }
 
   @override
   Widget build(BuildContext context) {
 
+    TextEditingController nameController = TextEditingController(text: player?.name);
+    TextEditingController scoreController = TextEditingController(text: player?.score.toString());
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Background(classeActive:
-          Container(
+        debugShowCheckedModeBanner: false,
+        home: Background(classeActive:
+        Container(
             child : Column(
               children: [
                 Container(
@@ -63,18 +48,13 @@ class _ScoreValidatorState extends State<ScoreValidator> {
                 Container(
                   child: Column(
                     children: [
-                      Image.asset(
-                        '../images/validate.png',
-                        width: 125,
-                        height: 125,
-                      ),
-                  const Text(
-                      'SCORE VALIDATOR',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 32.0
-                        )
+                      const Text(
+                          'UPDATE',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 32.0
+                          )
                       ),
                     ],
                   ),
@@ -86,40 +66,6 @@ class _ScoreValidatorState extends State<ScoreValidator> {
                   endIndent: 15,
                   color: Colors.white,
                 ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * (1/2),
-                    child: Row(
-                      children: [
-                        const Text(
-                          'DATE:',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0
-                          ),
-                        ),
-                        Expanded(
-                            child: TextField(
-                              controller: dateController,
-                              cursorColor: Colors.purple,
-                              cursorHeight: 30,
-                              decoration: InputDecoration(
-                                  labelText: 'DD/MM/YYYY',
-                                  labelStyle: TextStyle(
-                                      color: Colors.lightBlue
-                                  ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.lightBlue),
-                                ),
-                              ),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold
-                              ),
-                            ),
-                        )
-                      ],
-                    ),
-                  ),
                 Container(
                   width: MediaQuery.of(context).size.width * (1/2),
                   child: Row(
@@ -200,12 +146,11 @@ class _ScoreValidatorState extends State<ScoreValidator> {
                       ),
                     ),
                     onPressed: () async {
-                      buttonpressed();
-                      changeStateValue(await Sqlite.getSinglePlayer(int.parse(scoreController.text), nameController.text));
-                      print('Date: ' + dateController.text + ', Name: ' + nameController.text + ', Score: ' + scoreController.text);
+                      await Sqlite.updatePlayer(player!.id, nameController.text, int.parse(scoreController.text));
+                      Navigator.pop(context);
                     },
                     child: const Text(
-                      'VALIDATE SCORE',
+                      'UPDATE SCORE',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -222,20 +167,11 @@ class _ScoreValidatorState extends State<ScoreValidator> {
                   endIndent: 15,
                   color: Colors.white,
                 ),
-                Container(
-                child : Text(
-                  _isPressedOnce ? 'Score exist : $_isExist' : 'Score exist : ',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0
-                    ),
-                  ),
-                ),
                 Spacer()
               ],
             )
-          )
-      )
+        )
+        )
     );
   }
 }
