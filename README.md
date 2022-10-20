@@ -1,16 +1,22 @@
-# tp1_whack_a_mole
+# tp2_whack_a_mole
 
-A new Flutter project.
+Voici les instructions pour faire les requêtes du CRUD avec Sqlite:
 
-## Getting Started
+** La date est gérée automatiquement donc nous n'avons pas à l'inscrire dans aucun cas
 
-This project is a starting point for a Flutter application.
+Pour le Select :
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ - Le Highscore utilise le Select *
+ - Le score validator utilise le Select Where
+ 
+ Pour le Insert :
+ 
+  - Une nouvelle page à été créée quand on clique sur New game afin de fair eun Insert d'un score.
+  
+  Pour l'Update : 
+  
+  - Dans le Highscore, il faut appuyer sur l'icone du crayon et une nouvelle fenêtre va s'ouvrir pour faire les modifications sur les champs qui seront déjà rempli par       les informations actuelles.
+  
+  Pour le Delete :
+  
+   - Dans le Highscore, il y a un icone de poubelle et on a juste a appuyer dessus pour supprimer le score.
