@@ -62,7 +62,7 @@ class About extends StatelessWidget {
                 onTap: (){
                   Navigator.pop(context);
                 },
-                child:Image.asset("../images/menuLogo.png",
+                child:Image.asset("images/menuLogo.png",
                   height : 80,
                   width: 80,
                   scale : 0.1

@@ -44,7 +44,7 @@ class _ScoreValidatorState extends State<ScoreValidator> {
                             },
                             child: Column(
                               children: [
-                                Image.asset('../images/backIcon.png', width: 75, height: 75),
+                                Image.asset('images/backIcon.png', width: 75, height: 75),
                                 const Text(
                                   'BACK',
                                   style: TextStyle(
@@ -64,7 +64,7 @@ class _ScoreValidatorState extends State<ScoreValidator> {
                   child: Column(
                     children: [
                       Image.asset(
-                        '../images/validate.png',
+                        'images/validate.png',
                         width: 125,
                         height: 125,
                       ),

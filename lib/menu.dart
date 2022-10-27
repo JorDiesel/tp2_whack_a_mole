@@ -15,7 +15,7 @@ class Menu extends StatelessWidget {
         Expanded(
             child: Column(
               children: [
-                Image.asset('../images/menuLogo.png'),
+                Image.asset('images/menuLogo.png'),
                   const Text(
                     'WHACK-A-MOLE',
                     style: TextStyle(

@@ -16,7 +16,7 @@ class Background extends StatelessWidget {
           decoration: BoxDecoration(
               color: Color.fromRGBO(0, 1, 50, 1),
               image: DecorationImage(
-                  image: AssetImage('../images/backgroundPattern.png'),
+                  image: AssetImage('images/backgroundPattern.png'),
                   repeat: ImageRepeat.repeat,
                   opacity: 0.1
               )

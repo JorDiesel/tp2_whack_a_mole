@@ -28,7 +28,7 @@ class InsertView extends StatelessWidget {
                             },
                             child: Column(
                               children: [
-                                Image.asset('../images/backIcon.png', width: 75, height: 75),
+                                Image.asset('images/backIcon.png', width: 75, height: 75),
                                 const Text(
                                   'BACK',
                                   style: TextStyle(
